@@ -1,0 +1,100 @@
+{
+    "name": "Multi-Language Docker Development",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "upgradePackages": true,
+            "username": "vscode",
+            "userUid": "automatic",
+            "userGid": "automatic"
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "moby": true,
+            "dockerDashComposeVersion": "v2"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "nodeGypDependencies": true,
+            "version": "18"
+        },
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11",
+            "installTools": true
+        },
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "17",
+            "installMaven": true,
+            "installGradle": false
+        },
+        "ghcr.io/devcontainers/features/go:1": {
+            "version": "1.21"
+        },
+        "ghcr.io/devcontainers/features/dotnet:1": {
+            "version": "8.0"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-docker",
+                "ms-python.python",
+                "ms-vscode.vscode-typescript-next",
+                "vscjava.vscode-java-pack",
+                "golang.go",
+                "ms-dotnettools.csharp",
+                "ms-azuretools.vscode-docker",
+                "ms-vscode-remote.remote-containers",
+                "GitHub.copilot",
+                "GitHub.copilot-chat"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "docker.dockerPath": "docker",
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "go.toolsManagement.checkForUpdates": "local",
+                "java.jdt.ls.java.home": "/usr/local/sdkman/candidates/java/current"
+            }
+        }
+    },
+    "forwardPorts": [3000, 5000, 7000, 8080, 8090, 5432, 6379, 80],
+    "portsAttributes": {
+        "3000": {
+            "label": "Node.js API",
+            "onAutoForward": "notify"
+        },
+        "5000": {
+            "label": "Python API",
+            "onAutoForward": "notify"
+        },
+        "7000": {
+            "label": ".NET API",
+            "onAutoForward": "notify"
+        },
+        "8080": {
+            "label": "Java API",
+            "onAutoForward": "notify"
+        },
+        "8090": {
+            "label": "Go API",
+            "onAutoForward": "notify"
+        },
+        "5432": {
+            "label": "PostgreSQL",
+            "onAutoForward": "silent"
+        },
+        "6379": {
+            "label": "Redis",
+            "onAutoForward": "silent"
+        },
+        "80": {
+            "label": "Nginx Load Balancer",
+            "onAutoForward": "notify"
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+    "remoteUser": "vscode",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace"
+}
